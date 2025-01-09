@@ -4,6 +4,7 @@ export function openPopup(popupElement) {
     requestAnimationFrame(() => {  
         popupElement.classList.add('popup_is-opened'); 
     });  
+    document.addEventListener('keydown', closeByEscape);
 }
 
 //закрытие попапов  
@@ -13,4 +14,12 @@ export function closePopup(popup) {
     setTimeout(() => {  
         popup.classList.remove('popup_is-animated');  
     }, 600);   
+    document.removeEventListener('keydown', closeByEscape);
+}
+
+//закрытие попапов по Esc
+function closeByEscape(event) {
+    if(event.key === 'Escape') {
+       closePopup(document.querySelector('.popup_is-opened'));
+    }
 }

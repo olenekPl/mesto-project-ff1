@@ -1,5 +1,5 @@
 //создание карточки
-export function createCard(card, deleting, handleLike, handleImageClick) {
+export function createCard(card, handleDeleteCard, handleLike, handleImageClick) {
     const cardTemplate = document.querySelector('#card-template').content;
     const cardElement = cardTemplate.cloneNode(true).firstElementChild;
   
@@ -20,7 +20,7 @@ export function createCard(card, deleting, handleLike, handleImageClick) {
     });  
 
     resetButton.addEventListener('click', () => {   
-        deleting(cardElement);  
+        handleDeleteCard(cardElement);  
     });  
 
     return cardElement;  
