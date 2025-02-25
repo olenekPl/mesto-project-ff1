@@ -8,9 +8,9 @@
 }  
 
 .popup_is-opened.popup_is-animated {  
-    visibility: visible; /* Сделать попап видимым при открытии */  
-    opacity: 1; /* Сделать попап видимым */  
-    pointer-events: auto; /* Включить взаимодействие с попапом */  
-    user-select: text; /* Разрешить выделение текста */  
-    transition: visibility 0s, opacity 0.6s; /* Плавное открытие */  
+    visibility: visible; /* сделать попап видимым при открытии */  
+    opacity: 1; /* сделать попап видимым */  
+    pointer-events: auto; /* включить взаимодействие с попапом */  
+    user-select: text; /* разрешить выделение текста */  
+    transition: visibility 0s, opacity 0.6s; /* плавное открытие */  
 }

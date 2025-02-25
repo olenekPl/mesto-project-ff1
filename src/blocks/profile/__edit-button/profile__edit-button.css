@@ -27,3 +27,22 @@
     background-size: 8px 8px;
   }
 }
+
+.profile__edit-avatar-button {
+  position: absolute;   
+  top: 50%;   
+  left: 50%;  
+  transform: translate(-50%, -50%);   
+  border: none;  
+  width: 26px;  
+  height: 26px;  
+  background: transparent url('../../../images/edit-icon.svg') center no-repeat;  
+  background-size: cover;  
+  opacity: 0;  
+  z-index: 2;
+  cursor: pointer; 
+}
+
+.profile__edit-avatar-button:hover {  
+  opacity: 1;   
+} 
