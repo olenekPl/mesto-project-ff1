@@ -1,2 +1,2 @@
 # Проектная работа Mesto
-https://olenekpl.github.io/mesto-project-ff1
+https://olenekpl.github.io/mesto-project-ff
