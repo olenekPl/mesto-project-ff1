@@ -68,7 +68,7 @@
       <form class="popup__form" name="new-place" novalidate>
         <input id="place-input" type="text" name="place-name" class="popup__input popup__input_type_card-name" placeholder="Название" required minlength="2" maxlength="30" data-error="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы.">
         <span class="place-input-error popup__input-error"></span>
-        <input id="link-input" type="url" name="link" class="popup__input popup__input_type_url" placeholder="Ссылка на картинку" required>
+        <input id="link-input" type="url" name="link" class="popup__input popup__input_type_url" placeholder="Ссылка на картинку" required data-error="Введите корректный URL изображения.">
         <span class="link-input-error popup__input-error"></span>
         <button type="submit" class="button popup__button">Сохранить</button>
       </form>

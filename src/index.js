@@ -1,5 +1,5 @@
 import './pages/index.css';    
-import { createCard, deleteCard, handleLike, openDeletePopup } from './components/card.js';  
+import { createCard, deleteCard, handleLike } from './components/card.js';  
 import { openPopup, closePopup } from './components/modal.js';   
 import { enableValidation, clearValidation } from './components/validation.js';
 import { getUserInfo, getInitialCards, updateUserInfo, addCard, deleteCardFromApi, updateAvatar } from './components/api.js';
@@ -34,7 +34,8 @@ const avatarInputError = avatarPopup.querySelector('.avatar-input-error');
 //функция для вывода данных пользователя  
 function displayUserInfo(user) {  
     profileTitle.textContent = user.name;  
-    profileDescription.textContent = user.about;  
+    profileDescription.textContent = user.about;
+    document.querySelector('.profile__image').style.backgroundImage = `url(${user.avatar})`;  
 }  
 
 //получаем данные пользователя и карточки  
@@ -56,6 +57,18 @@ function handleDeleteCard(cardElement, cardId) {
             .catch(err => console.error(err));  
     });  
 } 
+
+//открытие попапа удаления карточки  
+function openDeletePopup(cardElement, cardId, handleConfirmDelete) {  
+    const deletePopup = document.querySelector('.popup_type_delete');  
+    openPopup(deletePopup);  
+
+    //обработчик на кнопку подтверждения  
+    const confirmDeleteButton = deletePopup.querySelector('#confirm-delete');  
+    confirmDeleteButton.onclick = () => {  
+        handleConfirmDelete(cardId);  
+    };  
+}
 
 //обработка клика по изображению  
 function handleImageClick(card) {  
@@ -121,7 +134,12 @@ avatarForm.addEventListener('submit', (evt) => {
         .catch(err => {  
             avatarInputError.textContent = err;   
             avatarInputError.classList.add('popup__error_visible');  
-        });  
+        })
+        .finally(() => {  
+            //возвращаем базовое состояние кнопки   
+            submitButton.textContent = 'Сохранить';  
+            submitButton.disabled = false;  
+        });
 });
 
 //закрытие попапов на крестик  
@@ -130,9 +148,8 @@ closeButtons.forEach(button => {
     button.addEventListener('click', function () {  
         const popup = button.closest('.popup');  
         closePopup(popup);  
-        if (popup === editPopup) {  
-            formEdit.reset(); //очищаем поля формы редактирования  
-        } else if (popup === newCardPopup) {  
+        //сброс полей формы в зависимости от попапа  
+        if (popup === newCardPopup) {  
             newCardFormElement.reset(); //очищаем поля новой карточки  
         }  
     });  
@@ -172,7 +189,12 @@ function handleProfileFormSubmit(evt) {
         //закрываем попап   
         closePopup(editPopup);  
     })  
-      .catch(err => console.error(err));      
+      .catch(err => console.error(err))
+      .finally(() => {  
+        //возвращаем базовое состояние кнопки  
+        submitButton.textContent = 'Сохранить';  
+        submitButton.disabled = false;  
+    });       
 }  
 
 //прикрепляем обработчик к форме редактирования профиля   
@@ -197,14 +219,19 @@ function handleNewCardSubmit(evt) {
     addCard(newCardName, newCardLink)  
       .then(cardData => {  
         //создаем элемент карточки и добавляем его в начало списка  
-        const cardElement = createCard(cardData, deleteCard, handleLike, handleImageClick);  
+        const cardElement = createCard(cardData, deleteCard, handleLike, handleImageClick, cardData.owner._id);  
         placesList.prepend(cardElement);  
 
         //закрываем попап и очищаем поля формы  
         closePopup(newCardPopup);  
         newCardFormElement.reset();  
       })  
-      .catch(err => console.error(err));  
+      .catch(err => console.error(err))
+      .finally(() => {  
+        //возвращаем базовое состояние кнопки  
+        submitButton.textContent = 'Создать';  
+        submitButton.disabled = false;  
+    }); 
 }  
 
 //прикрепляем обработчик к форме добавления новой карточки   
