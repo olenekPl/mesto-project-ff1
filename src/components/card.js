@@ -42,17 +42,17 @@ export function createCard(card, handleDeleteCard, handleLike, handleImageClick,
 
 //обработка лайка 
 export function handleLike(likeButton, card, likeCountElement) {  
-    const isLiked = likeButton.classList.toggle('card__like-button_is-active'); //переключаем состояние кнопки  
-    const likeMethod = isLiked ? putLike : deleteLike;  
-
-    likeMethod(card._id)   
-        .then(updatedCard => {  
-            likeCountElement.textContent = updatedCard.likes.length;   
-        })  
-        .catch(err => console.log(err));  
+    const isLiked = likeButton.classList.contains('card__like-button_is-active');
+    const likeMethod = isLiked ? deleteLike : putLike;
+    likeMethod(card._id) 
+    .then(updatedCard => {
+        likeButton.classList.toggle('card__like-button_is-active');
+        likeCountElement.textContent = updatedCard.likes.length; 
+    })
+.catch(err => console.log(err)); 
 }   
 
 //удалениe карточки  
 export function deleteCard(cardElement) {  
     cardElement.remove();  
-}    
+} 

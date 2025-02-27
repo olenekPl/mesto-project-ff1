@@ -1,8 +1,3 @@
-//регулярное выражение для проверки допустимых символов  
-const regex = /^[A-Za-zа-яА-ЯёЁ0-9ёЁ -]+$/;  
-//регулярное выражение для URL  
-const urlRegex = /(http|https):\/\/[^\s/$.?#].[^\s]*/;   
-
 //функция для показа ошибки  
 const showInputError = (formElement, inputElement, errorMessage, validationConfig) => {  
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);  
@@ -22,38 +17,20 @@ const hideInputError = (formElement, inputElement, validationConfig) => {
 };  
 
 //функция проверки валидности ввода  
-const checkInputValidity = (formElement, inputElement, validationConfig) => {  
-  if (inputElement.type === "url") {  
-    if (!urlRegex.test(inputElement.value.trim())) {  
-      inputElement.setCustomValidity(inputElement.dataset.error);   
-    } else {  
-      inputElement.setCustomValidity("");  
-    }  
-  } else {  
-    //проверка на соответствие паттерну для других полей  
-    if (inputElement.validity.patternMismatch) {  
-      inputElement.setCustomValidity(inputElement.dataset.error);  
-    } else {  
-      inputElement.setCustomValidity("");  
-    }   
+const checkInputValidity = (formElement, inputElement, validationConfig) => {    
+  if (inputElement.validity.patternMismatch) {   
+    inputElement.setCustomValidity(inputElement.dataset.error);   
+  } else {   
+    inputElement.setCustomValidity("");   
+  }
 
-    //проверка для полей с регулярным выражением  
-    if (["name", "description", "place-name"].includes(inputElement.name) && inputElement.value.trim() === "") {  
-      inputElement.setCustomValidity("");  
-    } else if (!regex.test(inputElement.value)) {  
-      inputElement.setCustomValidity(inputElement.dataset.error);  
-    } else {  
-      inputElement.setCustomValidity("");  
-    }  
-  }  
-
-  //показать или скрыть ошибку  
+  //показываем или скрываем ошибку  
   if (!inputElement.validity.valid) {  
     showInputError(formElement, inputElement, inputElement.validationMessage, validationConfig);  
   } else {  
     hideInputError(formElement, inputElement, validationConfig);  
   }  
-};  
+};   
 
 //функция очистки ошибок валидации  
 export const clearValidation = (formElement, validationConfig) => {  
@@ -116,4 +93,4 @@ export const enableValidation = (validationConfig) => {
 
     setEventListeners(formElement, validationConfig);  
   });  
-};  
+}; 
